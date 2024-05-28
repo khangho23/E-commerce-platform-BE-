@@ -109,7 +109,7 @@ class AccessService {
             const { privateKey, publicKey } = generateKeyPairSync()
 
             // Step 4
-            const {_id: userId} = foundShop
+            const { _id: userId } = foundShop
             const tokens = await createTokenPair({ userId, email }, publicKey, privateKey)
 
             // Step 5
@@ -130,6 +130,11 @@ class AccessService {
                 status: 'error'
             }
         }
+    }
+    static logout = async ({ keyStore }) => {
+        const delKey = await KeyTokenService.removekeyById(keyStore._id)
+        console.log({delKey})
+        return delKey
     }
 }
 
