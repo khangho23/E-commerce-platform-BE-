@@ -1,0 +1,22 @@
+@url_dev=http://localhost:8000/v1/api
+
+### REGISTER SHOP
+POST  {{url_dev}}/shop/register
+Content-Type: application/json
+x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696
+
+{
+    "name": "Shop TIPS",
+    "email": "shoptipdev@gmail.com",
+    "password": "abc123"
+}
+
+### LOGIN SHOP
+POST  {{url_dev}}/shop/login
+Content-Type: application/json
+x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696
+
+{
+    "email": "shoptipdev@gmail.com",
+    "password": "abc123"
+}
