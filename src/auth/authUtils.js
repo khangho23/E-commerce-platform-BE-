@@ -49,6 +49,8 @@ const authentication = asyncHandler(async (req, res, next) => {
     // Step 1
     const userId = req.headers[HEADER.CLIENT_ID]
 
+    console.log(userId);
+
     if (!userId) throw new AuthFailureError('Missing userId')
 
     // Step 2
@@ -68,7 +70,12 @@ const authentication = asyncHandler(async (req, res, next) => {
     }
 })
 
+const verifyJWT = (token, keySecret) => {
+    return JWT.verify(token, keySecret)
+}
+
 module.exports = {
     createTokenPair,
-    authentication
+    authentication,
+    verifyJWT
 }

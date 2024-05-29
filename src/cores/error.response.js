@@ -10,33 +10,39 @@ class ErrorResponse extends Error {
 }
 
 class ConflictRequestError extends ErrorResponse {
-    constructor (message = httpStatus.ReasonPhrases.CONFLICT, statusCode = httpStatus.CONFLICT) {
+    constructor(message = httpStatus.ReasonPhrases.CONFLICT, statusCode = httpStatus.CONFLICT) {
         super(message, statusCode)
     }
 }
 
 class BadRequestError extends ErrorResponse {
-    constructor (message = httpStatus.ReasonPhrases.BAD_REQUEST, statusCode = httpStatus.BAD_REQUEST) {
+    constructor(message = httpStatus.ReasonPhrases.BAD_REQUEST, statusCode = httpStatus.BAD_REQUEST) {
         super(message, statusCode)
     }
 }
 
-class AuthFailureError extends ErrorResponse{
-    constructor (message = httpStatus.ReasonPhrases.UNAUTHORIZED, statusCode = httpStatus.UNAUTHORIZED) {
+class AuthFailureError extends ErrorResponse {
+    constructor(message = httpStatus.ReasonPhrases.UNAUTHORIZED, statusCode = httpStatus.UNAUTHORIZED) {
         super(message, statusCode)
     }
 }
 
-class NotFoundError extends ErrorResponse{
-    constructor (message = httpStatus.ReasonPhrases.NOT_FOUND, statusCode = httpStatus.NOT_FOUND) {
+class NotFoundError extends ErrorResponse {
+    constructor(message = httpStatus.ReasonPhrases.NOT_FOUND, statusCode = httpStatus.NOT_FOUND) {
         super(message, statusCode)
     }
 }
 
+class ForbiddenError extends ErrorResponse {
+    constructor(message = httpStatus.ReasonPhrases.FORBIDDEN, statusCode = httpStatus.FORBIDDEN) {
+        super(message, statusCode)
+    }
+}
 
 module.exports = {
     ConflictRequestError,
     BadRequestError,
     AuthFailureError,
-    NotFoundError
+    NotFoundError,
+    ForbiddenError
 }

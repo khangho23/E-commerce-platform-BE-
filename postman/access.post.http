@@ -20,3 +20,21 @@ x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d900614
     "email": "shoptipdev@gmail.com",
     "password": "abc123"
 }
+
+### LOGOUT SHOP
+POST  {{url_dev}}/shop/logout
+Content-Type: application/json
+x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696
+x-client-id: 66558dc2a8014cfb3f24fd80
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1OGRjMmE4MDE0Y2ZiM2YyNGZkODAiLCJlbWFpbCI6InNob3B0aXBkZXZAZ21haWwuY29tIiwiaWF0IjoxNzE2OTEwMDc2LCJleHAiOjE3MTcwODI4NzZ9.J2k_HKKgbkNJgi-EOvrJ_5Li6XKsOa649tz29Dp5qxE
+
+### HANDLE REFRESH TOKEN
+POST  {{url_dev}}/shop/handle-refresh-token
+Content-Type: application/json
+x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696
+x-client-id: 66558dc2a8014cfb3f24fd80
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1OGRjMmE4MDE0Y2ZiM2YyNGZkODAiLCJlbWFpbCI6InNob3B0aXBkZXZAZ21haWwuY29tIiwiaWF0IjoxNzE2OTU1MjI2LCJleHAiOjE3MTcxMjgwMjZ9.xxdHj2pSGOoEwYx-LqCzkdaz_6eR8uq5ff6c3zsoI84
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1OGRjMmE4MDE0Y2ZiM2YyNGZkODAiLCJlbWFpbCI6InNob3B0aXBkZXZAZ21haWwuY29tIiwiaWF0IjoxNzE2OTU0MzE2LCJleHAiOjE3MTc1NTkxMTZ9.XOW0jdpfauYQMfQ_CaQkOd-iHQuKtIBQJ40Inw-lH1k"
+}

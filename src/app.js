@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 })
 
 app.use((error, req, res, next) => {
-    const statusCode = error || httpStatus.INTERNAL_SERVER_ERROR
+    const statusCode = error.status || httpStatus.INTERNAL_SERVER_ERROR
     return res.status(statusCode).json({
         status: 'error',
         code: statusCode,

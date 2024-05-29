@@ -17,11 +17,37 @@ class KeyTokenService {
             return error
         }
     }
+
     static findByUserId = async (userId) => {
-        return await keyTokenModel.findOne({user: Types.ObjectId(userId)}).lean()
+        return await keyTokenModel.findOne({user: new Types.ObjectId(userId)}).lean()
     }
-    static removekeyById = async (id) => {
-        return await keyTokenModel.remove(id)
+
+    static removeKeyById = async (id) => {
+        return await keyTokenModel.deleteOne(id)
+    }
+
+    static findByRefreshTokenUsed = async (refreshToken) => {
+        return await keyTokenModel.findOne({refreshTokensUsed: refreshToken}).lean()
+    }
+
+    static deleteKeyById = async (userId) => {
+        return await keyTokenModel.findOneAndDelete({user: userId})
+    }
+
+    static findByRefreshToken = async (refreshToken) => {
+        return await keyTokenModel.findOne({refreshToken}).lean()
+    }
+
+    static updateRefreshTokenById = async (tokenHolderIdDoc, refreshToken, refreshTokenUsed) => {
+        return await keyTokenModel.updateOne(
+            { _id: tokenHolderIdDoc },
+            {
+                $set: { refreshToken },
+                $addToSet: {
+                    refreshTokensUsed: refreshTokenUsed // Old refresh token
+                }
+            }
+        )
     }
 }
 
