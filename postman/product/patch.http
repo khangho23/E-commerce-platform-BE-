@@ -1,0 +1,22 @@
+@url_dev=http://localhost:8000/v1/api
+
+### UPDATE A PRODUCT
+PATCH  {{url_dev}}/product/665a9b3ac24d3da384991475
+Content-Type: application/json
+x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696
+x-client-id: 66558dc2a8014cfb3f24fd80
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1OGRjMmE4MDE0Y2ZiM2YyNGZkODAiLCJlbWFpbCI6InNob3B0aXBkZXZAZ21haWwuY29tIiwiaWF0IjoxNzE3NDcyNzAyLCJleHAiOjE3MTc2NDU1MDJ9.FhzZhpBQ23PeFbKLzJw3IuAsKO4dY_2WX4SsHOQ_7hw
+
+{
+  "name": "Ghế tantra",
+  "description": "Phục vụ mọi tư thế",
+  "price": 50000000,
+  "category": "Furniture",
+  "thumb": "product_thumb",
+  "quantity": 5,
+  "attributes": {
+    "brand": "Peppa",
+    "size": "XX",
+    "material": "Da bò"
+  }
+}

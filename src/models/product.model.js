@@ -72,7 +72,7 @@ const productSchema = new Schema({
 })
 
 // Create index for the product schema
-productSchema.index({ name: 'text', description: 'text' })
+productSchema.index({ name: 'text', description: 'text' }, {unique: false})
 
 // Document middleware: runs before .save() and .create()
 productSchema.pre('save', function (next) {
