@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 
 app.use((error, req, res, next) => {
     const statusCode = error.status || httpStatus.INTERNAL_SERVER_ERROR
+    console.error('Stack tracing:', error.stack)
     return res.status(statusCode).json({
         status: 'error',
         code: statusCode,

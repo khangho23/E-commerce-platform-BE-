@@ -3,6 +3,7 @@
 const httpStatus = require('http-status-codes')
 const AccessService = require('../services/access.service')
 const { CREATED, OK } = require('../cores/success.response')
+const {HEADER} = require('../commons/constants')
 
 class AccessController {
     register = async (req, res, next) => {
@@ -29,7 +30,11 @@ class AccessController {
     handleRefreshToken = async (req, res, next) => {
         new OK({
             message: 'Get token successfully!',
-            metadata: await AccessService.handleRefreshToken(req.body.refreshToken)
+            metadata: await AccessService.handleRefreshToken({
+                refreshToken: req.headers[HEADER.REFRESH_TOKEN],
+                user: req.user,
+                keyStore: req.keyStore
+            })
         }).send(res)
     }
 }

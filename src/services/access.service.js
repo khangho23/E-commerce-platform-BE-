@@ -126,30 +126,22 @@ class AccessService {
     /*
         Check refresh token used to warning => refresh token is not secure
     */
-    static handleRefreshToken = async (refreshToken) => {
-        const foundToken = await KeyTokenService.findByRefreshTokenUsed(refreshToken)
-        if (foundToken) {
-            // Decode to see the payload
-            const { userId, email } = verifyJWT(refreshToken, foundToken.privateKey)
-            console.log({ userId, email })
+    static handleRefreshToken = async ({ refreshToken, user, keyStore }) => {
+        const { userId, email } = user
 
-            // Delete the keyStore
+        if (keyStore.refreshTokensUsed.includes(refreshToken)) {
             await KeyTokenService.deleteKeyById(userId)
             throw new ForbiddenError('Refresh token is not secure!')
         }
 
-        const tokenHolder = await KeyTokenService.findByRefreshToken(refreshToken)
-        if (!tokenHolder) throw new AuthFailureError('Refresh token not found!')
-
-        const { userId, email } = verifyJWT(refreshToken, tokenHolder.privateKey)
-        console.log('[2] ---', { userId, email })
+        if (keyStore.refreshToken != refreshToken) throw new AuthFailureError('Refresh token not found!')
 
         const foundShop = await ShopService.findByEmail({ email })
         if (!foundShop) throw new AuthFailureError('Shop not found!')
 
-        const tokens = await createTokenPair({ userId, email }, tokenHolder.publicKey, tokenHolder.privateKey)
+        const tokens = await createTokenPair({ userId, email }, keyStore.publicKey, keyStore.privateKey)
 
-        await KeyTokenService.updateRefreshTokenById(tokenHolder._id, tokens.refreshToken, refreshToken)
+        await KeyTokenService.updateRefreshTokenById(keyStore._id, tokens.refreshToken, refreshToken)
 
         return {
             user: { userId, email },

@@ -3,15 +3,10 @@
 const JWT = require('jsonwebtoken')
 const { asyncHandler } = require('../helpers/asyncHandler')
 const { AuthFailureError, NotFoundError } = require('../cores/error.response')
+const {HEADER} = require('../commons/constants')
 
 // SERVICE
 const KeyTokenService = require('../services/keyToken.service')
-
-const HEADER = {
-    API_KEY: 'x-api-key',
-    CLIENT_ID: 'x-client-id',
-    AUTHORIZATION: 'authorization'
-}
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
     try {
@@ -57,13 +52,29 @@ const authentication = asyncHandler(async (req, res, next) => {
     const keyStore = await KeyTokenService.findByUserId(userId)
     if (!keyStore) throw new NotFoundError('User not found')
 
+
+    const refreshToken = req.headers[HEADER.REFRESH_TOKEN]
+    if (refreshToken) {
+        try {
+            const decode = JWT.verify(refreshToken, keyStore.privateKey)
+            if (userId !== decode.userId) throw new AuthFailureError('Invalid token')
+            req.keyStore = keyStore
+            req.user = decode
+            req.refreshToken = refreshToken
+            return next()
+        } catch (error) {
+            throw error
+        }
+    }
+
     // Step 3
     const accessToken = req.headers[HEADER.AUTHORIZATION]
 
     try {
-        const decode = await JWT.verify(accessToken, keyStore.publicKey)
+        const decode = JWT.verify(accessToken, keyStore.publicKey)
         if (userId !== decode.userId) throw new AuthFailureError('Invalid token')
         req.keyStore = keyStore
+        req.user = decode
         return next()
     } catch (error) {
         throw error
