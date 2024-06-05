@@ -78,7 +78,7 @@ const unPublishProductByShop = async ({ shop, productId }) => {
 }
 
 /**
- * 
+ * @description Search products
  * @param {*} keySearch 
  * @returns 
  * @throws {Error}
@@ -97,6 +97,17 @@ const searchProductsByUser = async ({keySearch}) => {
         .lean() || []
 }
 
+/**
+ * @description Find all products
+ * @param {Object} param0
+ * @param {number} param0.limit
+ * @param {string} param0.sort
+ * @param {number} param0.page
+ * @param {Object} param0.filter
+ * @param {string} param0.select
+ * @returns
+ * @throws {Error}
+ */
 const findAllProducts = async ({ limit, sort, page, filter, select }) => {
     const skip = (page - 1) * limit
     const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
@@ -109,14 +120,39 @@ const findAllProducts = async ({ limit, sort, page, filter, select }) => {
         .lean() || []
 }
 
+/**
+ * @description Find product by id
+ * @param {Object} param0
+ * @param {string} param0.productId
+ * @param {string} param0.unSelect
+ * @returns
+ * @throws {Error}
+ */
 const findProduct = async ({productId, unSelect}) => {
     return await product.findById(productId).select(unGetSelectedData(unSelect)).lean() || null
 }
 
+/**
+ * @description Update product
+ * @param {string} productId 
+ * @param {Object} data 
+ * @returns 
+ * @throws {Error}
+ */
 const updateProduct = async (productId, data) => {
     return await product.findByIdAndUpdate(productId, data, { new: true }).lean() || null
 }
 
+/**
+ * @description Update product by id
+ * @param {Object} param0
+ * @param {string} param0.productId
+ * @param {Object} param0.payload
+ * @param {Object} param0.model
+ * @param {boolean} param0.isNew 
+ * @returns 
+ * @throws {Error}
+ */
 const updateProductById = async ({productId, payload, model, isNew = true}) => {
     return await model.findByIdAndUpdate(productId, payload, { new: isNew }).lean() || null
 }

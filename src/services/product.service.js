@@ -2,7 +2,7 @@
 
 const { product, clothing, electronic, furniture } = require('../models/product.model')
 const { BadRequestError } = require('../cores/error.response')
-const ProductCategory = require('../enums/ProductCategory')
+const ProductCategory = require('../enums/productCategory')
 const {
     findAllDraftsForShop,
     findAllPublishedForShop,
@@ -12,9 +12,9 @@ const {
     findAllProducts,
     findProduct,
     updateProductById
-} = require('../repositories/product.respository')
+} = require('../repositories/product.repository')
 const { removeNullOrUndefinedObj, updateNestedObjParser } = require('../utils')
-const { insertInventory } = require('../repositories/inventory.repo')
+const { insertInventory } = require('../repositories/inventory.repository')
 
 // Define the factory class
 class ProductFactory {

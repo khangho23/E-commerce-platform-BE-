@@ -1,13 +1,18 @@
 'use strict'
 
-const shopModel = require('../models/shop.model')
+const { findByEmail } = require('../repositories/shop.repository')
 
-const findByEmail = async ({email, select = {
-    email: 1, password: 2, name: 1, status: 1, roles: 1
-}}) => {
-    return await shopModel.findOne({ email }).select(select).lean()   
+class ShopService {
+    /**
+     * @description Find by email
+     * @param {Object} param0
+     * @param {string} param0.email
+     * @returns
+     * @throws {Error}
+     */
+    static async findByEmail({ email }) {
+        return await findByEmail({ email })
+    }
 }
 
-module.exports = {
-    findByEmail
-}
+module.exports = ShopService

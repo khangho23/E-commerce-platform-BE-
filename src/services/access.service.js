@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt')
 const { createTokenPair, verifyJWT } = require('../auth/authUtils')
 const { getInfoData } = require('../utils')
 const { BadRequestError, AuthFailureError, ForbiddenError } = require("../cores/error.response")
-const { findByEmail } = require("../services/shop.service")
 const { generateKeyPairSync } = require('../utils/generateKeyPair')
 
 // SERVICE
@@ -22,6 +21,15 @@ const RoleShop = {
 }
 
 class AccessService {
+    /**
+     * @description Find shop by email
+     * @param {Object} param0
+     * @param {string} param0.name
+     * @param {string} param0.email
+     * @param {string} param0.password 
+     * @returns 
+     * @throws {Error}
+     */
     static register = async ({ name, email, password }) => {
         const holderShop = await shopModel.findOne({ email }).lean()
         if (holderShop)
@@ -58,7 +66,7 @@ class AccessService {
             if (!keyStore)
                 return {
                     code: 'xxxx',
-                    message: 'publicKeyString error'
+                    message: 'publicKeystring error'
                 }
 
             // Created token pair
@@ -87,9 +95,18 @@ class AccessService {
         4. Generate tokens
         5. Get data and return login successfully
     */
+    /**
+     * 
+     * @param {Object} param0
+     * @param {string} param0.email
+     * @param {string} param0.password
+     * @param {string} param0.refreshToken 
+     * @returns 
+     * @throws {Error}
+     */
     static login = async ({ email, password, refreshToken = null }) => {
         // Step 1
-        const foundShop = await findByEmail({ email })
+        const foundShop = await ShopService.findByEmail({ email })
         if (!foundShop)
             throw new BadRequestError('Shop not found!')
 
@@ -117,6 +134,13 @@ class AccessService {
         }
     }
 
+    /**
+     * @description Logout
+     * @param {Object} param0
+     * @param {string} param0.keyStore 
+     * @returns 
+     * @throws {Error}
+     */
     static logout = async ({ keyStore }) => {
         const delKey = await KeyTokenService.removeKeyById(keyStore._id)
         console.log({ delKey })
@@ -126,6 +150,14 @@ class AccessService {
     /*
         Check refresh token used to warning => refresh token is not secure
     */
+    /**
+     * 
+     * @param {Object} param0
+     * @param {string} param0.refreshToken
+     * @param {Object} param0.user
+     * @param {Object} param0.keyStore 
+     * @returns 
+     */
     static handleRefreshToken = async ({ refreshToken, user, keyStore }) => {
         const { userId, email } = user
 

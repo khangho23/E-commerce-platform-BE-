@@ -1,7 +1,9 @@
-const ProductCategory = Object.freeze({
+const productCategory = Object.freeze({
     CLOTHING: 'Clothing',
     ELECTRONICS: 'Electronics',
     FURNITURE: 'Furniture'
 })
 
-module.exports = ProductCategory
+module.exports = {
+    productCategory
+}

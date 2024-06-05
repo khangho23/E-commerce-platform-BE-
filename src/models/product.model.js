@@ -1,11 +1,11 @@
 'use strict'
 
 const { Schema, model } = require('mongoose') // Erase if already required
-const ProductCategory = require('../enums/ProductCategory')
+const ProductCategory = require('../enums/productCategory')
 const slugify = require('slugify')
 
 const DOCUMENT_NAME = 'Product'
-const COLLECTION_NAME = 'Products'
+const COLLECTION_NAME = 'products'
 
 // ENUMS
 const categoriesArray = Object.values(ProductCategory) || []
