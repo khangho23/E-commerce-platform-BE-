@@ -14,7 +14,7 @@ class DiscountController {
         }).send(res)
     }
 
-    getAllDiscountCodes = async (req, res, next) => {
+    getAllDiscountCodesByShop = async (req, res, next) => {
         new OK({
             message: 'All discount codes',
             metadata: await DiscountService.getAllDiscountCodesByShop({

@@ -64,7 +64,7 @@ class DiscountService {
      * @throws {Error} 
      */
     static async getAllDiscountCodesWithProducts({
-        shop, product, user, limit, page
+        code, shop, user, limit = 50, page = 1
     }) {
         // Create index for discount collection
         const foundDiscount = await findByCodeAndShopId({ code, shop })
@@ -74,7 +74,7 @@ class DiscountService {
 
         const { applyTo, productIds } = foundDiscount
         let products
-
+        
         if (applyTo === applyToEnums.ALL) {
             // Get all products
             products = await findAllProducts({
@@ -129,7 +129,7 @@ class DiscountService {
      * @returns {Promise<Object>}
      * @throws {Error}
      */
-    static async getDiscountAmout({ code, shop, userId, productIds }) {
+    static async getDiscountAmout({ code, shop, user, products }) {
         const foundDiscount = await findByCodeAndShopId({ code, shop })
 
         if (!foundDiscount || !foundDiscount.isActive)
@@ -167,7 +167,7 @@ class DiscountService {
         }
 
         if (maxUsesPerUser > 0) {
-            const userUsed = usersUsed.find(user => user === userId)
+            const userUsed = usersUsed.find(userId => userId === user)
             if (userUsed)
                 throw new NotFoundError('User used discount code too many times')
         }
