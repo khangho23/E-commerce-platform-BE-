@@ -6,7 +6,7 @@ const {HEADER} = require('../commons/constants')
 const apiKey = async (req, res, next) => {
     try {
         const key = req.headers[HEADER.API_KEY]?.toString()
-
+        
         if (!key)
             return res.json({
                 message: 'Forbidden'

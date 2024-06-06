@@ -1,7 +1,7 @@
 'use strict'
 
 const { discount } = require('../models/discount.model')
-const { unGetSelectData, getSelectedData } = require('../utils')
+const { unGetSelectedData, getSelectedData, convertToObjectIdMongoDB } = require('../utils')
 
 /**
  * @description Find discount by code and shop id
@@ -42,7 +42,8 @@ const findByCodeAndShopId = async ({ code, shop }) => {
  */
 const insertDiscount = async ({
     code, startDate, endDate, isActive,
-    shop, minOrderValue = 0, productIds, applyTo,
+    shop, minOrderValue = 0, productIds,
+    applyTo = productIds.length > 0 ? applyToEnums.SPECIFIC_PRODUCT : applyToEnums.ALL,
     name, description, type, value, maxValue,
     maxUses, usesCount, maxUsesPerUser, usersUsed
 }) => {
@@ -77,7 +78,7 @@ const findAllDiscountCodesUnSelect = async ({
         .sort(sortBy)
         .skip(skip)
         .limit(limit)
-        .select(unGetSelectData(unSelect))
+        .select(unGetSelectedData(unSelect))
         .lean() || []
 }
 
@@ -96,9 +97,34 @@ const findAllDiscountCodesSelect = async ({
         .lean() || []
 }
 
+/**
+ * @description Find one and delete
+ * @param {Object} param0
+ * @param {Object} param0.filter
+ * @returns
+ * @throws {Error}
+ */
+const findOneAndDelete = async ({ filter }) => {
+    return await discount.findOneAndDelete(filter).lean() || null
+}
+
+/**
+ * @description Find by id and update
+ * @param {Object} param0
+ * @param {Object} param0.filter
+ * @param {Object} param0.update
+ * @returns
+ * @throws {Error}
+ */
+const findByIdAndUpdate = async ({ filter, update }) => {
+    return await discount.findByIdAndUpdate(filter, update, { new: true }).lean() || null
+}
+
 module.exports = {
     findByCodeAndShopId,
     insertDiscount,
     findAllDiscountCodesUnSelect,
-    findAllDiscountCodesSelect
+    findAllDiscountCodesSelect,
+    findOneAndDelete,
+    findByIdAndUpdate
 }

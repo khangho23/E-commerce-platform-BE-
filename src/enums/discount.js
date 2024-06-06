@@ -5,6 +5,11 @@ const applyTo = Object.freeze({
     SPECIFIC_PRODUCT: 'specific_products'
 })
 
+const type = Object.freeze({
+    FIXED_AMOUNT: 'fixed_amout'
+})
+
 module.exports = {
-    applyTo
+    applyTo,
+    type
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-const ApiKeyModel = require('../models/apiKey.model')
+const apiKey = require('../models/apiKey.model')
 
 /**
  * @description Find discount by code and shop id
@@ -9,13 +9,8 @@ const ApiKeyModel = require('../models/apiKey.model')
  * @param {string} discount.shop
  * @returns 
  */
-const findById = async ({key, status = true}) => {
-    // const apiKey = crypto.randomBytes(64).toString('hex')
-    // const newKey = await ApiKeyModel.create({ key: apiKey, permissions: ['0000'] })
-
-    // console.log(newKey)
-
-    return await ApiKeyModel.findOne({ key, status: true }).lean()
+const findById = async ({ key, status = true }) => {
+    return await apiKey.findOne({ key, status }).lean()
 }
 
 module.exports = {

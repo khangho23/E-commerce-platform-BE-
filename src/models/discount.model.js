@@ -1,7 +1,7 @@
 'use strict'
 
 const { Schema, model } = require('mongoose') // Erase if already required
-const {applyTo} = require('../enums/discount')
+const { applyTo, type } = require('../enums/discount')
 
 const DOCUMENT_NAME = 'Discount'
 const COLLECTION_NAME = 'discounts'
@@ -21,7 +21,7 @@ const discountSchema = new Schema({
     },
     percentage: {
         type: Number,
-        required: true
+        required: false
     },
     description: {
         type: String,
@@ -30,7 +30,7 @@ const discountSchema = new Schema({
     type: {
         type: String,
         required: true,
-        default: 'fixed_amount' // percentage, fixed_amount
+        default: type.FIXED_AMOUNT // percentage, fixed_amount
     },
     value: {
         type: Number,
