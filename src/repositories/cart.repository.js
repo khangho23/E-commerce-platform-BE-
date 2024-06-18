@@ -2,6 +2,7 @@
 
 const { cart } = require('../models/cart.model')
 const { state: stateEnums } = require('../enums/cart')
+const { convertToObjectIdMongoDB } = require('../utils')
 
 /**
  * @description Find discount by code and shop id
@@ -38,11 +39,11 @@ const createUserCart = async ({ user, product }) => {
  * @returns 
  */
 const updateUserCartQuantity = async ({ user, product }) => {
-    const { productId, quantity } = product
+    const { _id, quantity } = product
 
     const query = {
         user,
-        'products.product': productId,
+        'products._id': _id,
         state: stateEnums.ACTIVE
     },
         updateSet = {
@@ -55,8 +56,35 @@ const updateUserCartQuantity = async ({ user, product }) => {
     return await cart.findOneAndUpdate(query, updateSet, options)
 }
 
+const deleteProductFromCart = async ({ user, productId }) => {
+    const query = { user, state: stateEnums.ACTIVE },
+        updateSet = {
+            $pull: {
+                products: {
+                    _id: productId
+                }
+            }
+        }
+
+    return await cart.findOneAndUpdate(query, updateSet, { new: true })
+}
+
+const getCartByUserId = async ({ user }) => {
+    return await cart.findOne({ user, state: stateEnums.ACTIVE }).lean() || null
+}
+
+const findCartById = async (cartId) => {
+    return await cart.findOne({
+        _id: convertToObjectIdMongoDB(cartId),
+        state: stateEnums.ACTIVE
+    }).lean() || null
+}
+
 module.exports = {
     findCart,
     createUserCart,
-    updateUserCartQuantity
+    updateUserCartQuantity,
+    deleteProductFromCart,
+    getCartByUserId,
+    findCartById
 }

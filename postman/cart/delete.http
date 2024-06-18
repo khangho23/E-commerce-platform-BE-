@@ -1,0 +1,20 @@
+@url_dev=http://localhost:8000/v1/api
+
+@apiKey=b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696
+@clientId=66558dc2a8014cfb3f24fd80
+@authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1OGRjMmE4MDE0Y2ZiM2YyNGZkODAiLCJlbWFpbCI6InNob3B0aXBkZXZAZ21haWwuY29tIiwiaWF0IjoxNzE3NjQ3ODM4LCJleHAiOjE3MTc4MjA2Mzh9.-MljTpBpU60ULxhjL1fRNa8j6l6Zhez50CQbv_1CW0Q
+@code=SHOP-1122
+@shop=66558dc2a8014cfb3f24fd80
+@user=5f5f3b3b1f1b3b3b3b3b3b3b
+
+### DELETE PRODUCT FROM CART
+DELETE  {{url_dev}}/cart
+Content-Type: application/json
+x-api-key: {{apiKey}}
+x-client-id: {{clientId}}
+authorization: {{authorization}}
+
+{
+  "user": "66558dc2a8014cfb3f24fd80",
+  "productId": "665f3d0e60f6f9c69a3427ef"
+}

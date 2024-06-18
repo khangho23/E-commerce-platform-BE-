@@ -2,7 +2,7 @@
 
 const { product, clothing, electronic, furniture } = require('../models/product.model')
 const { Types } = require('mongoose')
-const { getSelectedData, unGetSelectedData } = require('../utils')
+const { getSelectedData, unGetSelectedData, convertToObjectIdMongoDB } = require('../utils')
 
 // --- Private functions ---
 const queryProductByShop = async ({ query, limit, skip }) => {
@@ -20,7 +20,7 @@ const queryProductByShop = async ({ query, limit, skip }) => {
 
 const updateDraftAndPublished = async ({ shop, productId, isDraft, isPublished }) => {
     return await product.findByIdAndUpdate(
-        { shop: new Types.ObjectId(shop), _id: new Types.ObjectId(productId) },
+        { shop: convertToObjectIdMongoDB(shop), _id: convertToObjectIdMongoDB(productId) },
         { isDraft, isPublished },
         { new: true }
     ) || null
@@ -83,7 +83,7 @@ const unPublishProductByShop = async ({ shop, productId }) => {
  * @returns 
  * @throws {Error}
  */
-const searchProductsByUser = async ({keySearch}) => {
+const searchProductsByUser = async ({ keySearch }) => {
     const regexSearch = new RegExp(keySearch, 'i')
 
     return await product.find(
@@ -111,7 +111,7 @@ const searchProductsByUser = async ({keySearch}) => {
 const findAllProducts = async ({ limit, sort, page, filter, select }) => {
     const skip = (page - 1) * limit
     const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 }
-   
+
     return await product.find(filter)
         .sort(sortBy)
         .skip(skip)
@@ -128,8 +128,13 @@ const findAllProducts = async ({ limit, sort, page, filter, select }) => {
  * @returns
  * @throws {Error}
  */
-const findProduct = async ({productId, unSelect}) => {
+const findProduct = async ({ productId, unSelect }) => {
     return await product.findById(productId).select(unGetSelectedData(unSelect)).lean() || null
+}
+
+const findProductSelectedFields = async ({ productId, select = [] }) => {
+    return await product.findById(convertToObjectIdMongoDB(productId))
+        .select(getSelectedData(select)).lean() || null
 }
 
 /**
@@ -153,8 +158,24 @@ const updateProduct = async (productId, data) => {
  * @returns 
  * @throws {Error}
  */
-const updateProductById = async ({productId, payload, model, isNew = true}) => {
+const updateProductById = async ({ productId, payload, model, isNew = true }) => {
     return await model.findByIdAndUpdate(productId, payload, { new: isNew }).lean() || null
+}
+
+const getProductById = async (productId) => {
+    return await product.findById(convertToObjectIdMongoDB(productId)).lean() || null
+}
+
+const checkProductByServer = async (products) => {
+    return await Promise.all(products.map(async (product) => {
+        const foundProduct = await getProductById(product._id);
+        if (foundProduct)
+            return {
+                _id: foundProduct._id,
+                price: foundProduct.price,
+                quantity: product.quantity,
+            };
+    }));
 }
 
 module.exports = {
@@ -165,6 +186,9 @@ module.exports = {
     searchProductsByUser,
     findAllProducts,
     findProduct,
+    findProductSelectedFields,
     updateProduct,
-    updateProductById
+    updateProductById,
+    getProductById,
+    checkProductByServer
 }

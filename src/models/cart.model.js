@@ -12,8 +12,9 @@ const stateEnums = Object.values(state) || []
 // Declare the Schema of the Mongo model
 const cartSchema = new Schema({
     user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        // type: Schema.Types.ObjectId,
+        // ref: 'User',
+        type: String,
         required: true
     },
     state: {
@@ -33,7 +34,7 @@ const cartSchema = new Schema({
     }
 }, {
     collection: COLLECTION_NAME,
-    timeseries: {
+    timestamps: {
         createdAt: 'createdOn',
         updatedAt: 'modifiedOn'
     }

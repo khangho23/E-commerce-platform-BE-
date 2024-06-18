@@ -15,7 +15,9 @@ router.use(apiKey)
 router.use(permission('0000'))
 
 router.use(`${API_VERSION_ONE}${ROUTING.PRODUCT}`, require('./product'))
+router.use(`${API_VERSION_ONE}${ROUTING.CART}`, require('./cart'))
 router.use(`${API_VERSION_ONE}${ROUTING.DISCOUNT}`, require('./discount'))
+router.use(`${API_VERSION_ONE}${ROUTING.CHECKOUT}`, require('./checkout'))
 router.use(`${API_VERSION_ONE}`, require('./access'))
 
 module.exports = router

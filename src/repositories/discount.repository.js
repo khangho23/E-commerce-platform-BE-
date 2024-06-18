@@ -2,6 +2,7 @@
 
 const { discount } = require('../models/discount.model')
 const { unGetSelectedData, getSelectedData, convertToObjectIdMongoDB } = require('../utils')
+const { applyTo: applyToEnums } = require('../enums/discount')
 
 /**
  * @description Find discount by code and shop id

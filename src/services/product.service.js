@@ -2,7 +2,7 @@
 
 const { product, clothing, electronic, furniture } = require('../models/product.model')
 const { BadRequestError } = require('../cores/error.response')
-const ProductCategory = require('../enums/productCategory')
+const { productCategory } = require('../enums/productCategory')
 const {
     findAllDraftsForShop,
     findAllPublishedForShop,
@@ -163,7 +163,10 @@ class Product {
 // Define sub-classes for different product categories Clothing and Electronics
 class Clothing extends Product {
     async createProduct() {
-        const newClothing = await clothing.create(this.attributes)
+        const newClothing = await clothing.create({
+            ...this.attributes,
+            shop: this.shop
+        })
         if (!newClothing) throw new BadRequestError('Failed to create new clothing')
 
         const newProduct = await super.createProduct(newClothing._id)
@@ -245,8 +248,8 @@ class Furniture extends Product {
     }
 }
 
-ProductFactory.registerProductCategory(ProductCategory.CLOTHING, Clothing)
-ProductFactory.registerProductCategory(ProductCategory.ELECTRONICS, Electronics)
-ProductFactory.registerProductCategory(ProductCategory.FURNITURE, Furniture)
+ProductFactory.registerProductCategory(productCategory.CLOTHING, Clothing)
+ProductFactory.registerProductCategory(productCategory.ELECTRONICS, Electronics)
+ProductFactory.registerProductCategory(productCategory.FURNITURE, Furniture)
 
 module.exports = ProductFactory
