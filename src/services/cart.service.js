@@ -11,7 +11,6 @@ const {
     deleteProductFromCart
 } = require('../repositories/cart.repository')
 const { getProductById, findProductSelectedFields } = require('../repositories/product.repository')
-const { convertToObjectIdMongoDB } = require('../utils')
 
 class CartService {
     /**

@@ -1,0 +1,1043 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Ecommerce Documentation - Ecommerce back end Express API with Swagger",
+    "version": "0.1.0",
+    "description": "This is a ecommerce application made with Express and documented with Swagger",
+    "license": {
+      "name": "Ecommerce platform",
+      "url": ""
+    },
+    "contact": {
+      "name": "Khang Ho",
+      "url": "https://khangho.id.vn",
+      "email": "hohoangkhang18@gmail.com"
+    }
+  },
+  "components": {
+    "schemas": {
+      "apiKey": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "default": true
+          },
+          "permissions": {
+            "type": "boolean",
+            "enums": [
+              "0000",
+              "1111",
+              "2222"
+            ]
+          }
+        },
+        "required": [
+          "key",
+          "permissions"
+        ],
+        "uniqueItems": [
+          "key"
+        ]
+      },
+      "cart": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "completed",
+              "failed",
+              "pending"
+            ],
+            "default": "active"
+          },
+          "products": {
+            "type": "array",
+            "default": []
+          },
+          "countProducts": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "user",
+          "products",
+          "countProducts"
+        ],
+        "uniqueItems": [
+          "key"
+        ]
+      },
+      "comment": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "required": true
+          },
+          "userId": {
+            "type": "string",
+            "required": true
+          },
+          "content": {
+            "type": "string",
+            "required": true
+          },
+          "left": {
+            "type": "number"
+          },
+          "right": {
+            "type": "number"
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "productId",
+          "userId",
+          "content"
+        ]
+      },
+      "discount": {
+        "type": "object",
+        "properties": {
+          "shop": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "percentage": {
+            "type": "number",
+            "required": false
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "default": "fixed_amount"
+          },
+          "value": {
+            "type": "number"
+          },
+          "code": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxUses": {
+            "type": "number"
+          },
+          "maxUsesPerUser": {
+            "type": "number"
+          },
+          "usersUsed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "minOrderValue": {
+            "type": "number",
+            "default": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          },
+          "applyTo": {
+            "type": "string",
+            "enum": [
+              "product1",
+              "product2",
+              "product3"
+            ]
+          },
+          "productIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        },
+        "required": [
+          "shop",
+          "name",
+          "description",
+          "type",
+          "value",
+          "code",
+          "startDate",
+          "endDate",
+          "maxUses",
+          "maxUsesPerUser",
+          "minOrderValue",
+          "isActive",
+          "applyTo"
+        ]
+      },
+      "inventory": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "type": "string"
+          },
+          "shop": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string",
+            "default": "unKnown"
+          },
+          "stock": {
+            "type": "number"
+          },
+          "reservations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        },
+        "required": [
+          "product",
+          "shop",
+          "stock"
+        ]
+      },
+      "keyToken": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "ref": "Shop"
+          },
+          "privateKey": {
+            "type": "string"
+          },
+          "publicKey": {
+            "type": "string"
+          },
+          "refreshTokensUsed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user",
+          "privateKey",
+          "publicKey",
+          "refreshToken"
+        ]
+      },
+      "order": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "number"
+          },
+          "checkout": {
+            "type": "object",
+            "default": {}
+          },
+          "shipping": {
+            "type": "object",
+            "default": {}
+          },
+          "payment": {
+            "type": "object",
+            "default": {}
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "trackingNumber": {
+            "type": "string",
+            "default": "#0000118052022"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "shipped",
+              "delivered",
+              "cancelled"
+            ],
+            "default": "pending"
+          }
+        },
+        "required": [
+          "user",
+          "products"
+        ]
+      },
+      "product": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "thumb": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "Clothing",
+              "Electronics",
+              "Furniture"
+            ]
+          },
+          "shop": {
+            "type": "string",
+            "ref": "Shop"
+          },
+          "attributes": {
+            "type": "object"
+          },
+          "rating": {
+            "type": "number",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 5
+          },
+          "variation": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "default": []
+          },
+          "isDraft": {
+            "type": "boolean",
+            "default": true,
+            "index": true,
+            "select": false
+          },
+          "isPublished": {
+            "type": "boolean",
+            "default": false,
+            "index": true,
+            "select": false
+          }
+        },
+        "required": [
+          "name",
+          "thumb",
+          "price",
+          "quantity",
+          "category",
+          "shop",
+          "attributes"
+        ]
+      },
+      "shop": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "trim": true,
+            "maxLength": 150
+          },
+          "email": {
+            "type": "string",
+            "unique": true,
+            "trim": true
+          },
+          "password": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "inactive"
+            ],
+            "default": "inactive"
+          },
+          "verify": {
+            "type": "boolean",
+            "default": false
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        },
+        "required": [
+          "password"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "definations": {
+    "parameters": {
+      "x-api-key": {
+        "name": "x-api-key",
+        "in": "header",
+        "required": true,
+        "description": "API Key needed to access the endpoints",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "x-client-id": {
+        "name": "x-client-id",
+        "in": "header",
+        "required": true,
+        "description": "Client ID needed to access the endpoints",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "Limit the number of results",
+        "schema": {
+          "type": "number"
+        }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "required": false,
+        "description": "Offset the results",
+        "schema": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/v1/api/shop/register": {
+      "post": {
+        "summary": "Register a shop",
+        "tags": [
+          "Access"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/definations/parameters/x-api-key"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Ben White"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "benwhite@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "String$$123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Registered OK!"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 201
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "example": {
+                        "shop": {
+                          "_id": "668d131a56e3ad46f02f6ca5",
+                          "name": "Ben White",
+                          "email": "benwhite@gmail.com"
+                        },
+                        "tokens": {
+                          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIwNjk0Mjk4fQ._AwQ956iVRJ_hU5E2z2sqpbRpP4ABCOKGWMfLOVFhMo",
+                          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIxMTI2Mjk4fQ.7r5uFnboT9wRGfL9etQStXeHFLzfrYTkJH44qD7mVsY"
+                        }
+                      }
+                    },
+                    "options": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/api/shop/login": {
+      "post": {
+        "summary": "Login a shop",
+        "tags": [
+          "Access"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/definations/parameters/x-api-key"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password",
+                  "refreshToken"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "benwhite@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "String$$123"
+                  },
+                  "refreshToken": {
+                    "type": "string",
+                    "example": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Login OK!"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "example": {
+                        "shop": {
+                          "_id": "668d131a56e3ad46f02f6ca5",
+                          "name": "Ben White",
+                          "email": "benwhite@gmail.com"
+                        },
+                        "tokens": {
+                          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIwNjk0Mjk4fQ._AwQ956iVRJ_hU5E2z2sqpbRpP4ABCOKGWMfLOVFhMo",
+                          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIxMTI2Mjk4fQ.7r5uFnboT9wRGfL9etQStXeHFLzfrYTkJH44qD7mVsY"
+                        }
+                      }
+                    },
+                    "options": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/api/shop/logout": {
+      "post": {
+        "summary": "Logout a shop",
+        "tags": [
+          "Access"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/definations/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/definations/parameters/x-client-id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Logged out!"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "example": {
+                        "acknowledged": true,
+                        "deletedCount": 1
+                      }
+                    },
+                    "options": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/api/shop/handle-refresh-token": {
+      "post": {
+        "summary": "Deal with refresh token",
+        "tags": [
+          "Access"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/definations/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/definations/parameters/x-client-id"
+          },
+          {
+            "name": "refresh-token",
+            "in": "header",
+            "required": true,
+            "description": "Refresh token to get new access token",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Get token successfully!"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "example": {
+                        "user": {
+                          "userId": "668f4ad3c1ac7204be7bdd06",
+                          "email": "benwhite@gmail.com"
+                        },
+                        "tokens": {
+                          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhmNGFkM2MxYWM3MjA0YmU3YmRkMDYiLCJlbWFpbCI6ImJlbndoaXRlQGdtYWlsLmNvbSIsImlhdCI6MTcyMDY2NzgwNSwiZXhwIjoxNzIwODQwNjA1fQ.UDSO1GHfq1mXXSxgovspTujnPQxwFYuB8ynb-BPaziQ",
+                          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhmNGFkM2MxYWM3MjA0YmU3YmRkMDYiLCJlbWFpbCI6ImJlbndoaXRlQGdtYWlsLmNvbSIsImlhdCI6MTcyMDY2NzgwNSwiZXhwIjoxNzIxMjcyNjA1fQ.UCq-FkdomPzdN-kuScXGNER7SZPE7jtsO99Oi9P1Z-k"
+                        }
+                      }
+                    },
+                    "options": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/api/comment": {
+      "get": {
+        "summary": "Get all comments",
+        "tags": [
+          "Comment"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/definations/parameters/x-api-key"
+          },
+          {
+            "name": "productId",
+            "in": "query",
+            "required": true,
+            "description": "Product ID to get comments",
+            "type": "string"
+          },
+          {
+            "name": "parentCommentId",
+            "in": "query",
+            "required": false,
+            "description": "Parent comment ID to get comments",
+            "type": "string"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Comment created"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "example": {
+                        "_id": "668e09bbef251f47a30bf0f4",
+                        "content": "Comment 1",
+                        "left": 1,
+                        "right": 8,
+                        "parentId": null
+                      }
+                    },
+                    "options": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a comment",
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/definations/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/definations/parameters/x-client-id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "productId",
+                  "userId",
+                  "content"
+                ],
+                "properties": {
+                  "productId": {
+                    "type": "string",
+                    "example": "6662d5790e54cf46a3375cd8"
+                  },
+                  "userId": {
+                    "type": "string",
+                    "example": "664cc19545191beb3311fe77"
+                  },
+                  "content": {
+                    "type": "string",
+                    "example": "Comment 1"
+                  },
+                  "parentCommentId": {
+                    "type": "string",
+                    "example": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Comment created"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 201
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "example": {
+                        "productId": "6662d5790e54cf46a3375cd8",
+                        "userId": "664cc19545191beb3311fe77",
+                        "content": "Comment 1",
+                        "left": 1,
+                        "right": 2,
+                        "parentId": null,
+                        "isDeleted": false,
+                        "_id": "668e09bbef251f47a30bf0f4",
+                        "createdAt": "2024-07-10T04:10:35.422Z",
+                        "updatedAt": "2024-07-10T04:10:35.422Z"
+                      }
+                    },
+                    "options": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Create a comment",
+        "tags": [
+          "Comment"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/definations/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/definations/parameters/x-client-id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "productId"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "668e143d4581de737a605809"
+                  },
+                  "productId": {
+                    "type": "string",
+                    "example": "6662d5790e54cf46a3375cd8"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Comment deleted"
+                    },
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "metadata": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "options": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}

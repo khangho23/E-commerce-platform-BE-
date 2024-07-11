@@ -3,7 +3,7 @@
 const JWT = require('jsonwebtoken')
 const { asyncHandler } = require('../helpers/asyncHandler')
 const { AuthFailureError, NotFoundError } = require('../cores/error.response')
-const {HEADER} = require('../commons/constants')
+const { HEADER } = require('../commons/constants')
 
 // SERVICE
 const KeyTokenService = require('../services/keyToken.service')
@@ -43,7 +43,6 @@ const authentication = asyncHandler(async (req, res, next) => {
 
     // Step 1
     const userId = req.headers[HEADER.CLIENT_ID]
-
     console.log(userId);
 
     if (!userId) throw new AuthFailureError('Missing userId')
@@ -69,15 +68,21 @@ const authentication = asyncHandler(async (req, res, next) => {
 
     // Step 3
     const accessToken = req.headers[HEADER.AUTHORIZATION]
+    
+    if (!accessToken || !accessToken.startsWith('Bearer ')) {
+        throw new AuthFailureError('Invalid token format');
+    }
 
+    const token = accessToken.split(' ')[1]; // Extract the token part
+    console.log(token);
     try {
-        const decode = JWT.verify(accessToken, keyStore.publicKey)
-        if (userId !== decode.userId) throw new AuthFailureError('Invalid token')
-        req.keyStore = keyStore
-        req.user = decode
-        return next()
+        const decode = JWT.verify(token, keyStore.publicKey);
+        if (userId !== decode.userId) throw new AuthFailureError('Invalid token');
+        req.keyStore = keyStore;
+        req.user = decode;
+        return next();
     } catch (error) {
-        throw error
+        throw error;
     }
 })
 

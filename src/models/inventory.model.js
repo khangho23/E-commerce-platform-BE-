@@ -1,9 +1,7 @@
 'use strict'
 
 const { Schema, model } = require('mongoose') // Erase if already required
-
-const DOCUMENT_NAME = 'Inventory'
-const COLLECTION_NAME = 'inventories'
+const { DATABASE: { DOCUMENT_NAME, COLLECTION_NAME } } = require('../commons/constants')
 
 const inventorySchema = new Schema({
     product: {
@@ -29,10 +27,10 @@ const inventorySchema = new Schema({
         default: []
     },
 }, {
-    collection: COLLECTION_NAME,
+    collection: COLLECTION_NAME.INVENTORY,
     timestamps: true
 })
 
 module.exports = {
-    inventory: model(DOCUMENT_NAME, inventorySchema)
+    inventory: model(DOCUMENT_NAME.INVENTORY, inventorySchema)
 }

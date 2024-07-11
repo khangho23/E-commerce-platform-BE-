@@ -137,6 +137,10 @@ const findProductSelectedFields = async ({ productId, select = [] }) => {
         .select(getSelectedData(select)).lean() || null
 }
 
+const checkProductById = async (productId) => {
+    return await product.exists({ _id: convertToObjectIdMongoDB(productId) })
+}
+
 /**
  * @description Update product
  * @param {string} productId 
@@ -187,6 +191,7 @@ module.exports = {
     findAllProducts,
     findProduct,
     findProductSelectedFields,
+    checkProductById,
     updateProduct,
     updateProductById,
     getProductById,

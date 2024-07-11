@@ -3,9 +3,7 @@
 const { Schema, model } = require('mongoose') // Erase if already required
 const ProductCategory = require('../enums/productCategory')
 const slugify = require('slugify')
-
-const DOCUMENT_NAME = 'Product'
-const COLLECTION_NAME = 'products'
+const { DATABASE: { DOCUMENT_NAME, COLLECTION_NAME } } = require('../commons/constants')
 
 // ENUMS
 const categoriesArray = Object.values(ProductCategory) || []
@@ -67,12 +65,12 @@ const productSchema = new Schema({
         select: false
     },
 }, {
-    collection: COLLECTION_NAME,
+    collection: COLLECTION_NAME.PRODUCT,
     timestamps: true
 })
 
 // Create index for the product schema
-productSchema.index({ name: 'text', description: 'text' }, {unique: false})
+productSchema.index({ name: 'text', description: 'text' }, { unique: false })
 
 // Document middleware: runs before .save() and .create()
 productSchema.pre('save', function (next) {
@@ -94,7 +92,7 @@ const clothingSchema = new Schema({
         required: true
     }
 }, {
-    collection: 'clothes',
+    collection: COLLECTION_NAME.CLOTHING,
     timestamps: true
 })
 
@@ -110,7 +108,7 @@ const electronicSchema = new Schema({
         ref: 'Shop',
     }
 }, {
-    collection: 'electronics',
+    collection: COLLECTION_NAME.ELECTRONIC,
     timestamps: true
 })
 
@@ -126,15 +124,15 @@ const furnitureSchema = new Schema({
         ref: 'Shop',
     }
 }, {
-    collection: 'furnitures',
+    collection: COLLECTION_NAME.FURNITURE,
     timestamps: true
 })
 
 module.exports = {
-    product: model(DOCUMENT_NAME, productSchema),
+    product: model(DOCUMENT_NAME.PRODUCT, productSchema),
 
     // Export the product's categories model
-    clothing: model('Clothes', clothingSchema),
-    electronic: model('Electronics', electronicSchema),
-    furniture: model('Furnitures', furnitureSchema),
+    clothing: model(DOCUMENT_NAME.CLOTHING, clothingSchema),
+    electronic: model(DOCUMENT_NAME.ELECTRONIC, electronicSchema),
+    furniture: model(DOCUMENT_NAME.FURNITURE, furnitureSchema),
 }

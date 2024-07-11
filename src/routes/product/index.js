@@ -1,36 +1,36 @@
 'use strict'
 
 const express = require('express')
-const productController = require('../../controllers/product.controller')
+const ProductController = require('../../controllers/product.controller')
 const { asyncHandler } = require('../../helpers/asyncHandler')
 const { authentication } = require('../../auth/authUtils')
 
 const router = express.Router()
 
-router.get('/search', asyncHandler(productController.searchProductsByUser))
-router.get('/all', asyncHandler(productController.findAllProducts))
-router.get('/:productId', asyncHandler(productController.findProduct))
+router.get('/search', asyncHandler(ProductController.searchProductsByUser))
+router.get('/all', asyncHandler(ProductController.findAllProducts))
+router.get('/:productId', asyncHandler(ProductController.findProduct))
 
 // Middleware
 router.use(authentication)
 
 // --- POST ---
 router.route('/')
-    .post(asyncHandler(productController.createProduct))
+    .post(asyncHandler(ProductController.createProduct))
 // --- END POST ---
 
 // --- PATCH ---
-router.patch('/:productId', asyncHandler(productController.updateProduct))
+router.patch('/:productId', asyncHandler(ProductController.updateProduct))
 // --- END PATCH ---
 
 // --- PUT ---
-router.put('/publish/:productId', asyncHandler(productController.publishProductByShop))
-router.put('/unpublish/:productId', asyncHandler(productController.unPublishProductByShop))
+router.put('/publish/:productId', asyncHandler(ProductController.publishProductByShop))
+router.put('/unpublish/:productId', asyncHandler(ProductController.unPublishProductByShop))
 // --- END PUT ---
 
 // --- QUERY ---
-router.get('/drafts', asyncHandler(productController.findAllDraftsForShop))
-router.get('/published', asyncHandler(productController.findAllPublishedForShop))
+router.get('/drafts', asyncHandler(ProductController.findAllDraftsForShop))
+router.get('/published', asyncHandler(ProductController.findAllPublishedForShop))
 // --- END QUERY ---
 
 module.exports = router

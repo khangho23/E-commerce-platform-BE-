@@ -2,9 +2,7 @@
 
 const { Schema, model } = require('mongoose') // Erase if already required
 const { state } = require('../enums/cart')
-
-const DOCUMENT_NAME = 'Cart'
-const COLLECTION_NAME = 'carts'
+const { DATABASE: { DOCUMENT_NAME, COLLECTION_NAME } } = require('../commons/constants')
 
 // ENUMS
 const stateEnums = Object.values(state) || []
@@ -33,7 +31,7 @@ const cartSchema = new Schema({
         default: 0
     }
 }, {
-    collection: COLLECTION_NAME,
+    collection: COLLECTION_NAME.CART,
     timestamps: {
         createdAt: 'createdOn',
         updatedAt: 'modifiedOn'
@@ -42,5 +40,5 @@ const cartSchema = new Schema({
 
 //Export the model
 module.exports = {
-    cart: model(DOCUMENT_NAME, cartSchema)
+    cart: model(DOCUMENT_NAME.CART, cartSchema)
 }

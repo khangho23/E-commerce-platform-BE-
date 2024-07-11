@@ -7,6 +7,10 @@ const getInfoData = ({ fields = [], object = {} }) => {
     return _.pick(object, fields)
 }
 
+const unGetInfoData = ({ fields = [], object = {} }) => {
+    return _.omit(object, fields)
+}
+
 const getSelectedData = (select = []) => {
     return Object.fromEntries(select.map(el => [el, 1]))
 }
@@ -54,6 +58,7 @@ const convertToObjectIdMongoDB = id => {
 
 module.exports = {
     getInfoData,
+    unGetInfoData,
     getSelectedData,
     unGetSelectedData,
     removeNullOrUndefinedObj,

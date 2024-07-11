@@ -2,9 +2,7 @@
 
 const { Schema, model } = require('mongoose') // Erase if already required
 const { applyTo, type } = require('../enums/discount')
-
-const DOCUMENT_NAME = 'Discount'
-const COLLECTION_NAME = 'discounts'
+const { DATABASE: { DOCUMENT_NAME, COLLECTION_NAME } } = require('../commons/constants')
 
 // ENUMS
 const applyToArray = Object.values(applyTo) || []
@@ -84,10 +82,10 @@ const discountSchema = new Schema({
         default: []
     }, // products that the discount applies to
 }, {
-    collection: COLLECTION_NAME,
+    collection: COLLECTION_NAME.DISCOUNT,
     timestamps: true
 })
 
 module.exports = {
-    discount: model(DOCUMENT_NAME, discountSchema)
+    discount: model(DOCUMENT_NAME.DISCOUNT, discountSchema)
 }
