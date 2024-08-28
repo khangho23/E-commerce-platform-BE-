@@ -9,7 +9,9 @@ const router = express.Router()
 
 router.get('/search', asyncHandler(ProductController.searchProductsByUser))
 router.get('/all', asyncHandler(ProductController.findAllProducts))
-router.get('/:productId', asyncHandler(ProductController.findProduct))
+
+// TODO: Fix bug here
+router.get('/id/:productId', asyncHandler(ProductController.findProduct))
 
 // Middleware
 router.use(authentication)
@@ -20,7 +22,8 @@ router.route('/')
 // --- END POST ---
 
 // --- PATCH ---
-router.patch('/:productId', asyncHandler(ProductController.updateProduct))
+// TODO: Fix bug here
+router.patch('/id/:productId', asyncHandler(ProductController.updateProduct))
 // --- END PATCH ---
 
 // --- PUT ---

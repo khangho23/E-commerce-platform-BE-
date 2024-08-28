@@ -8,6 +8,7 @@ module.exports = {
         CHECKOUT: '/checkout',
         INVENTORY: '/inventory',
         COMMENT: '/comment',
+        NOTIFICATION: '/notification',
     },
     HEADER: {
         API_KEY: 'x-api-key',
@@ -29,6 +30,7 @@ module.exports = {
             ELECTRONIC: 'Electronics',
             FURNITURE: 'Furnitures',
             COMMENT: 'Comment',
+            NOTIFICATION: 'Notification',
         },
         COLLECTION_NAME: {
             API_KEY: 'apiKeys',
@@ -43,6 +45,7 @@ module.exports = {
             ELECTRONIC: 'electronics',
             FURNITURE: 'furnitures',
             COMMENT: 'comments',
+            NOTIFICATION: 'notifications',
         }
     },
 }

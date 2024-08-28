@@ -7,7 +7,7 @@ x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d900614
 
 {
     "name": "Shop TIPS",
-    "email": "shoptipdev@gmail.com",
+    "email": "sshoptipdev@gmail.com",
     "password": "abc123"
 }
 
@@ -32,5 +32,5 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1OGRjMmE4
 POST  {{url_dev}}/shop/handle-refresh-token
 Content-Type: application/json
 x-api-key: b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696
-x-client-id: 66558dc2a8014cfb3f24fd80
-refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1OGRjMmE4MDE0Y2ZiM2YyNGZkODAiLCJlbWFpbCI6InNob3B0aXBkZXZAZ21haWwuY29tIiwiaWF0IjoxNzE3MTI2MzYxLCJleHAiOjE3MTc3MzExNjF9.Xs5aQxAAzRZWnVc7Dxt_mEGmfqoAaeZbFblDwh0HmOU
+x-client-id: 668f4ad3c1ac7204be7bdd06
+refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhmNGFkM2MxYWM3MjA0YmU3YmRkMDYiLCJlbWFpbCI6ImJlbndoaXRlQGdtYWlsLmNvbSIsImlhdCI6MTcyMDY2NzY3NCwiZXhwIjoxNzIxMjcyNDc0fQ.9aYXojZO720ZFpW-VtWkT3Pi3yMeGLLYZTGEkO0XdSo

@@ -16,6 +16,12 @@ const {
 const { removeNullOrUndefinedObj, updateNestedObjParser } = require('../utils')
 const { insertInventory } = require('../repositories/inventory.repository')
 
+// SERVICES
+const { pushNotificationSystem } = require('./notification.service')
+
+// ENUMS
+const { state } = require('../enums/notification.enum')
+
 // Define the factory class
 class ProductFactory {
     /*
@@ -149,6 +155,20 @@ class Product {
         if (newProduct) {
             // Add product to shop inventory
             await insertInventory({ shop: this.shop, product: productId, stock: this.quantity })
+
+            // Push notification to shop owner about new product
+            pushNotificationSystem({
+                type: state.NEW_PRODUCT_FOR_FOLLOWER,
+                receivedId: 1,
+                senderId: this.shop,
+                options: {
+                    productId,
+                    productName: this.name,
+                    shop: this.shop
+                }
+            })
+                .then(result => console.log('Push notification result:', result))
+                .catch(err => console.error('Push notification error:', err))
         }
 
         return newProduct

@@ -424,9 +424,7 @@
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }
-    }
-  },
-  "definations": {
+    },
     "parameters": {
       "x-api-key": {
         "name": "x-api-key",
@@ -434,7 +432,8 @@
         "required": true,
         "description": "API Key needed to access the endpoints",
         "schema": {
-          "type": "string"
+          "type": "string",
+          "example": "b9913657ab193323d09412b3d8c7bc0039cefd657e66b147b6b0e19d4cf434d9006143621f5b92c215ce1326d28e555e77b965053a3e1a57143bf44cb2424696"
         }
       },
       "x-client-id": {
@@ -464,6 +463,76 @@
           "type": "number"
         }
       }
+    },
+    "responses": {
+      "Success200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "status": {
+                  "type": "number",
+                  "example": 200
+                },
+                "metadata": {
+                  "type": "object",
+                  "example": {}
+                },
+                "options": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "Created201": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Created successfully"
+                },
+                "status": {
+                  "type": "number",
+                  "example": 201
+                },
+                "metadata": {
+                  "type": "object",
+                  "example": {}
+                },
+                "options": {
+                  "type": "object",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest400": {
+        "description": "Bad request"
+      },
+      "Unauthorized401": {
+        "description": "Unauthorized"
+      },
+      "NotFound404": {
+        "description": "Not found"
+      },
+      "InternalServerError500": {
+        "description": "Internal server error"
+      }
     }
   },
   "paths": {
@@ -475,7 +544,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/definations/parameters/x-api-key"
+            "$ref": "#/components/parameters/x-api-key"
           }
         ],
         "requestBody": {
@@ -509,48 +578,16 @@
         },
         "responses": {
           "201": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Registered OK!"
-                    },
-                    "status": {
-                      "type": "number",
-                      "example": 201
-                    },
-                    "metadata": {
-                      "type": "object",
-                      "example": {
-                        "shop": {
-                          "_id": "668d131a56e3ad46f02f6ca5",
-                          "name": "Ben White",
-                          "email": "benwhite@gmail.com"
-                        },
-                        "tokens": {
-                          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIwNjk0Mjk4fQ._AwQ956iVRJ_hU5E2z2sqpbRpP4ABCOKGWMfLOVFhMo",
-                          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIxMTI2Mjk4fQ.7r5uFnboT9wRGfL9etQStXeHFLzfrYTkJH44qD7mVsY"
-                        }
-                      }
-                    },
-                    "options": {}
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Created201"
           },
           "400": {
-            "description": "Bad request"
+            "$ref": "#/components/responses/BadRequest400"
           },
           "404": {
-            "description": "Not found"
+            "$ref": "#/components/responses/NotFound404"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/InternalServerError500"
           }
         }
       }
@@ -563,7 +600,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/definations/parameters/x-api-key"
+            "$ref": "#/components/parameters/x-api-key"
           }
         ],
         "requestBody": {
@@ -597,48 +634,16 @@
         },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Login OK!"
-                    },
-                    "status": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "metadata": {
-                      "type": "object",
-                      "example": {
-                        "shop": {
-                          "_id": "668d131a56e3ad46f02f6ca5",
-                          "name": "Ben White",
-                          "email": "benwhite@gmail.com"
-                        },
-                        "tokens": {
-                          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIwNjk0Mjk4fQ._AwQ956iVRJ_hU5E2z2sqpbRpP4ABCOKGWMfLOVFhMo",
-                          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhkMTMxYTU2ZTNhZDQ2ZjAyZjZjYTUiLCJlbWFpbCI6InNzaG9wdGlwZGV2QGdtYWlsLmNvbSIsImlhdCI6MTcyMDUyMTQ5OCwiZXhwIjoxNzIxMTI2Mjk4fQ.7r5uFnboT9wRGfL9etQStXeHFLzfrYTkJH44qD7mVsY"
-                        }
-                      }
-                    },
-                    "options": {}
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Success200"
           },
           "400": {
-            "description": "Bad request"
+            "$ref": "#/components/responses/BadRequest400"
           },
           "404": {
-            "description": "Not found"
+            "$ref": "#/components/responses/NotFound404"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/InternalServerError500"
           }
         }
       }
@@ -656,52 +661,27 @@
         ],
         "parameters": [
           {
-            "$ref": "#/definations/parameters/x-api-key"
+            "$ref": "#/components/parameters/x-api-key"
           },
           {
-            "$ref": "#/definations/parameters/x-client-id"
+            "$ref": "#/components/parameters/x-client-id"
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Logged out!"
-                    },
-                    "status": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "metadata": {
-                      "type": "object",
-                      "example": {
-                        "acknowledged": true,
-                        "deletedCount": 1
-                      }
-                    },
-                    "options": {}
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Success200"
           },
           "400": {
-            "description": "Bad request"
+            "$ref": "#/components/responses/BadRequest400"
           },
           "401": {
-            "description": "Forbidden"
+            "$ref": "#/components/responses/Unauthorized401"
           },
           "404": {
-            "description": "Not found"
+            "$ref": "#/components/responses/NotFound404"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/InternalServerError500"
           }
         }
       }
@@ -714,98 +694,850 @@
         ],
         "parameters": [
           {
-            "$ref": "#/definations/parameters/x-api-key"
+            "$ref": "#/components/parameters/x-api-key"
           },
           {
-            "$ref": "#/definations/parameters/x-client-id"
+            "$ref": "#/components/parameters/x-client-id"
           },
           {
             "name": "refresh-token",
             "in": "header",
             "required": true,
             "description": "Refresh token to get new access token",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Get token successfully!"
-                    },
-                    "status": {
-                      "type": "number",
-                      "example": 200
-                    },
-                    "metadata": {
-                      "type": "object",
-                      "example": {
-                        "user": {
-                          "userId": "668f4ad3c1ac7204be7bdd06",
-                          "email": "benwhite@gmail.com"
-                        },
-                        "tokens": {
-                          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhmNGFkM2MxYWM3MjA0YmU3YmRkMDYiLCJlbWFpbCI6ImJlbndoaXRlQGdtYWlsLmNvbSIsImlhdCI6MTcyMDY2NzgwNSwiZXhwIjoxNzIwODQwNjA1fQ.UDSO1GHfq1mXXSxgovspTujnPQxwFYuB8ynb-BPaziQ",
-                          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjhmNGFkM2MxYWM3MjA0YmU3YmRkMDYiLCJlbWFpbCI6ImJlbndoaXRlQGdtYWlsLmNvbSIsImlhdCI6MTcyMDY2NzgwNSwiZXhwIjoxNzIxMjcyNjA1fQ.UCq-FkdomPzdN-kuScXGNER7SZPE7jtsO99Oi9P1Z-k"
-                        }
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/product/drafts": {
+      "get": {
+        "summary": "Get all drafts of a shop",
+        "tags": [
+          "Product"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/components/parameters/x-client-id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/product/published": {
+      "get": {
+        "summary": "Get all published products of a shop",
+        "tags": [
+          "Product"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/components/parameters/x-client-id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/product/search": {
+      "get": {
+        "summary": "Search products by name",
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          },
+          {
+            "name": "keySearch",
+            "in": "query",
+            "required": true,
+            "description": "Key search to find products",
+            "schema": {
+              "type": "string",
+              "example": "ghế tantra"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/product/all": {
+      "get": {
+        "summary": "Get all products of a shop",
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/product/id/{productId}": {
+      "get": {
+        "summary": "Get product by ID",
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          },
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "description": "Product ID to get",
+            "schema": {
+              "type": "string",
+              "example": "665a9b3ac24d3da384991475"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a product",
+        "tags": [
+          "Product"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/components/parameters/x-client-id"
+          },
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "description": "Product ID to unpublish",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/product": {
+      "post": {
+        "summary": "Create a product",
+        "tags": [
+          "Product"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/components/parameters/x-client-id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Giáp rồng"
+                  },
+                  "thumb": {
+                    "type": "string",
+                    "example": "https://salt.tikicdn.com/cache/100x100/ts/product/d6/4f/c3/71f089390f605d172b54ed6f6aaa1877e.jpg.webp"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Giáp làm từ vảy rồng chắc chắn sẽ giúp bạn trở thành một chiến binh mạnh mẽ"
+                  },
+                  "slug": {
+                    "type": "string",
+                    "example": "giap-rong"
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 111000
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "example": 23
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "Clothing"
+                  },
+                  "shop": {
+                    "type": "string",
+                    "example": "60c72b2f5f1b2c001c8e4e8e"
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "properties": {
+                      "brand": {
+                        "type": "string",
+                        "example": "DRAGON fly"
+                      },
+                      "size": {
+                        "type": "string",
+                        "example": "XL"
+                      },
+                      "material": {
+                        "type": "string",
+                        "example": "Vảy rồng"
                       }
+                    }
+                  },
+                  "variation": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
                     },
-                    "options": {}
+                    "example": []
+                  }
+                },
+                "required": [
+                  "name",
+                  "thumb",
+                  "price",
+                  "quantity",
+                  "category",
+                  "shop",
+                  "attributes"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created201"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/inventory/add-stock": {
+      "post": {
+        "summary": "Add stock to inventory",
+        "tags": [
+          "Inventory"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string",
+                    "example": "66710d8dd12e8b626509aa48"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "example": 100
                   }
                 }
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
           },
           "400": {
-            "description": "Bad request"
+            "$ref": "#/components/responses/BadRequest400"
           },
           "401": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not found"
+            "$ref": "#/components/responses/Unauthorized401"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/discount/amount": {
+      "post": {
+        "summary": "Get discount amount",
+        "tags": [
+          "Discount"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string",
+                    "example": "66710d8dd12e8b626509aa48"
+                  },
+                  "discountCode": {
+                    "type": "string",
+                    "example": "DISCOUNT2024"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/discount/product-codes": {
+      "get": {
+        "summary": "Get all discount codes with products",
+        "tags": [
+          "Discount"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/discount/all-products": {
+      "get": {
+        "summary": "Get all products with discount codes",
+        "tags": [
+          "Discount"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/discount": {
+      "get": {
+        "summary": "Get all discount codes by shop",
+        "tags": [
+          "Discount"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a discount",
+        "tags": [
+          "Discount"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "example": "DISCOUNT2024"
+                  },
+                  "productId": {
+                    "type": "string",
+                    "example": "66710d8dd12e8b626509aa48"
+                  },
+                  "discountAmount": {
+                    "type": "number",
+                    "example": 20000
+                  },
+                  "validUntil": {
+                    "type": "string",
+                    "example": "2024-12-31T23:59:59Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created201"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/cart": {
+      "get": {
+        "summary": "Get cart by user ID",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound404"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add product to cart",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string",
+                    "example": "66710d8dd12e8b626509aa48"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "example": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created201"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update cart",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string",
+                    "example": "66710d8dd12e8b626509aa48"
+                  },
+                  "quantity": {
+                    "type": "number",
+                    "example": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete product from cart",
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string",
+                    "example": "66710d8dd12e8b626509aa48"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/checkout": {
+      "post": {
+        "summary": "Checkout cart",
+        "tags": [
+          "Checkout"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cartId": {
+                    "type": "string",
+                    "example": "66710d8dd12e8b626509aa48"
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "123 Main Street"
+                  },
+                  "paymentMethod": {
+                    "type": "string",
+                    "example": "credit_card"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created201"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
           }
         }
       }
     },
     "/v1/api/comment": {
       "get": {
-        "summary": "Get all comments",
+        "summary": "Get a comment by parent ID",
         "tags": [
           "Comment"
         ],
         "parameters": [
           {
-            "$ref": "#/definations/parameters/x-api-key"
-          },
-          {
             "name": "productId",
             "in": "query",
             "required": true,
-            "description": "Product ID to get comments",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the product"
           },
           {
             "name": "parentCommentId",
             "in": "query",
             "required": false,
-            "description": "Parent comment ID to get comments",
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID of the parent comment"
           },
           {
-            "$ref": "#/components/parameters/limit"
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limit the number of results"
           },
           {
-            "$ref": "#/components/parameters/offset"
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Offset the results"
           }
         ],
         "responses": {
@@ -818,39 +1550,27 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Comment created"
-                    },
-                    "status": {
-                      "type": "number",
-                      "example": 200
+                      "example": "Comments fetched"
                     },
                     "metadata": {
-                      "type": "object",
-                      "example": {
-                        "_id": "668e09bbef251f47a30bf0f4",
-                        "content": "Comment 1",
-                        "left": 1,
-                        "right": 8,
-                        "parentId": null
-                      }
-                    },
-                    "options": {}
+                      "type": "object"
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request"
+            "$ref": "#/components/responses/BadRequest400"
           },
           "401": {
-            "description": "Forbidden"
+            "$ref": "#/components/responses/Unauthorized401"
           },
           "404": {
-            "description": "Not found"
+            "$ref": "#/components/responses/NotFound404"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/InternalServerError500"
           }
         }
       },
@@ -864,41 +1584,24 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/definations/parameters/x-api-key"
-          },
-          {
-            "$ref": "#/definations/parameters/x-client-id"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "productId",
-                  "userId",
-                  "content"
-                ],
                 "properties": {
                   "productId": {
-                    "type": "string",
-                    "example": "6662d5790e54cf46a3375cd8"
+                    "type": "string"
                   },
                   "userId": {
-                    "type": "string",
-                    "example": "664cc19545191beb3311fe77"
+                    "type": "string"
                   },
                   "content": {
-                    "type": "string",
-                    "example": "Comment 1"
+                    "type": "string"
                   },
                   "parentCommentId": {
-                    "type": "string",
-                    "example": null
+                    "type": "string"
                   }
                 }
               }
@@ -907,7 +1610,7 @@
         },
         "responses": {
           "201": {
-            "description": "Success",
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
@@ -917,47 +1620,27 @@
                       "type": "string",
                       "example": "Comment created"
                     },
-                    "status": {
-                      "type": "number",
-                      "example": 201
-                    },
                     "metadata": {
-                      "type": "object",
-                      "example": {
-                        "productId": "6662d5790e54cf46a3375cd8",
-                        "userId": "664cc19545191beb3311fe77",
-                        "content": "Comment 1",
-                        "left": 1,
-                        "right": 2,
-                        "parentId": null,
-                        "isDeleted": false,
-                        "_id": "668e09bbef251f47a30bf0f4",
-                        "createdAt": "2024-07-10T04:10:35.422Z",
-                        "updatedAt": "2024-07-10T04:10:35.422Z"
-                      }
-                    },
-                    "options": {}
+                      "type": "object"
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request"
+            "$ref": "#/components/responses/BadRequest400"
           },
           "401": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not found"
+            "$ref": "#/components/responses/Unauthorized401"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/InternalServerError500"
           }
         }
       },
       "delete": {
-        "summary": "Create a comment",
+        "summary": "Delete a comment",
         "tags": [
           "Comment"
         ],
@@ -966,32 +1649,18 @@
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "$ref": "#/definations/parameters/x-api-key"
-          },
-          {
-            "$ref": "#/definations/parameters/x-client-id"
-          }
-        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "id",
-                  "productId"
-                ],
                 "properties": {
                   "id": {
-                    "type": "string",
-                    "example": "668e143d4581de737a605809"
+                    "type": "string"
                   },
                   "productId": {
-                    "type": "string",
-                    "example": "6662d5790e54cf46a3375cd8"
+                    "type": "string"
                   }
                 }
               }
@@ -1010,31 +1679,75 @@
                       "type": "string",
                       "example": "Comment deleted"
                     },
-                    "status": {
-                      "type": "number",
-                      "example": 200
-                    },
                     "metadata": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "options": {}
+                      "type": "object"
+                    }
                   }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request"
+            "$ref": "#/components/responses/BadRequest400"
           },
           "401": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not found"
+            "$ref": "#/components/responses/Unauthorized401"
           },
           "500": {
-            "description": "Internal server error"
+            "$ref": "#/components/responses/InternalServerError500"
+          }
+        }
+      }
+    },
+    "/v1/api/notification": {
+      "get": {
+        "summary": "Get notifications successfully!",
+        "tags": [
+          "Notification"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-api-key"
+          },
+          {
+            "$ref": "#/components/parameters/x-client-id"
+          },
+          {
+            "name": "receivedId",
+            "in": "query",
+            "required": true,
+            "description": "ID of the user who received the notification",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "description": "Type of the notification",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success200"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized401"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError500"
           }
         }
       }

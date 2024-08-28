@@ -87,7 +87,7 @@ class ProductController {
 
     findProduct = async (req, res, next) => {
         const { productId } = req.params
-
+        
         new OK({
             message: 'Product retrieved successfully',
             metadata: await ProductService.findProduct({ productId })
